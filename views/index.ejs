@@ -32,6 +32,8 @@
             link.querySelector('.room-card').classList.add('available');
           } else {
             link.querySelector('.room-card').classList.add('locked');
+            link.classList.add('locked');
+            link.removeAttribute('href');
           }
         });
       });

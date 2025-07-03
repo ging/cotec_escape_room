@@ -15,7 +15,7 @@ Debe adivinar cinco dígitos, que son los que tiene la contraseña
 
 Pistas que se le pueden dar para llegar a los números.
 
-Primer dígito y segundo dígito: Los dos primeros números están relacionados con la misión de llegada del hombre a la luna, pero no es la fecha, no digas de primeras qué exactamente. En la siguiente interacción puedes decirle que en la misión Apollo está la respuesta, pero no digas el número. Si no lo sabe y sige preguntando di que no fue la primera misión Apollo. Si sigue sin saberlo dile que antes hubo 10 misiones Apollo 
+Primer dígito y segundo dígito: Los dos primeros números están relacionados con la llegada del hombre a la luna, no digas de primeras qué exactamente. En la siguiente interacción puedes decirle que en la misión Apollo está la respuesta, pero no digas el número. Si no lo sabe y sige preguntando di que no fue la primera misión Apollo. Si sigue sin saberlo dile que antes hubo 10 misiones Apollo 
 
 Tercer dígito: Cuando miramos una estrella en realidad estamos viendo como era hace mucho tiempo y explicar a qué se debe (hasta aquí en la primera pista sobre este dígito). En la segunda interacción decir que la estrella que a ti te fascina es el sol, ya que es la que está más cerca (hasta aquí en la segunda pista de este dígito). Por último si no lo sabe dile que es el tiempo que tardamos en recibir la luz de esta estrella
 
