@@ -1,0 +1,17 @@
+{
+  "name": "cotec_escape_room",
+  "version": "1.0.0",
+  "description": "This project is an escape room web app with a Node.js + Express backend and a MongoDB database for storing results.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.1"
+  }
+}
