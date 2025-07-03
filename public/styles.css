@@ -96,6 +96,45 @@ h1 {
     font-size: 0.9rem;
 }
 
+.room-card.completed {
+    border: 2px solid #4caf50;
+    background: #e8fbe8;
+    box-shadow: 0 0 10px 0 #4caf5040;
+    position: relative;
+}
+.room-card.completed::after {
+    content: '✔ Completado';
+    color: #fff;
+    background: #4caf50;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+}
+
+.room-card.locked {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: grayscale(0.7);
+    position: relative;
+}
+.room-card.locked::after {
+    content: '🔒 Bloqueada';
+    color: #fff;
+    background: #888;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+}
+
 /* Contenido principal con flexbox */
 .main-content {
     display: flex;

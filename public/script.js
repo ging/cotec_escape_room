@@ -6,8 +6,11 @@ function initEscapeRoom(config) {
         outputWordsPenalty = 0.05,
         failurePenalty = 10,
         timeLimit = 300, // 5 minutos por defecto
-        allowContinueAfterGameOver = false
+        allowContinueAfterGameOver = false,
+        contextPath = "/sostenibilidadgenerativa"
     } = config || {};
+
+    console.log("config", config);
 
     let totalInputWords = 0;
     let totalOutputWords = 0;
@@ -94,7 +97,7 @@ function initEscapeRoom(config) {
     // Función para cuando se acaba el tiempo o la energía
     async function gameOver() {
 
-        await fetch('/api/validate', {
+        await fetch('api/validate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ room, code: "GameOver", escapp_email, assistant_id, thread_id, run_id,remaining_time, remaining_energy })
@@ -195,7 +198,7 @@ function initEscapeRoom(config) {
             case 'chat_created':
                 console.log('Chat creado', data);
                 thread_id = data.threadId;
-                await fetch('/api/validate', {
+                await fetch('api/validate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ room, code: "Start", escapp_email, assistant_id, thread_id, run_id, remaining_time, remaining_energy })
@@ -261,7 +264,7 @@ function initEscapeRoom(config) {
 
         // Llamada a la API
         try {
-            const response = await fetch('/api/validate', {
+            const response = await fetch('api/validate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ room, code, escapp_email, assistant_id, thread_id, run_id, remaining_time, remaining_energy })
@@ -274,8 +277,10 @@ function initEscapeRoom(config) {
                 const lockTitle = document.getElementById('lockTitle');
                 lockTitle.textContent = "🔓 Sala Abierta";
                 lockTitle.innerHTML = "🔓 Sala Abierta";
-                submitButton.textContent = "Sala Abierta";
-                submitButton.disabled = true;
+                submitButton.textContent = "Vuelve al menú";
+                submitButton.onclick = () => {
+                    window.location.href = contextPath + '/';
+                };
                 lockContainer.classList.add('opened');
                 lockContainer.classList.remove('error');
                 messageDiv.textContent = "¡Sala abierta! Has resuelto el enigma 🎉";

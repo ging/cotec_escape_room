@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Room Cotec</title>
+    <link rel="stylesheet" href="<%= CONTEXT_PATH %>/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><%= title %></h1>
+            <div class="desc">
+                <%= desc %>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="left-panel">
+                <div class="chatbot-container">
+                    <div class="chatbot-header">
+                        <h3>💬 <%= botTitle %></h3>
+                        <div class="energy-container">
+                            <div class="battery">
+                                <div class="battery-level" id="batteryLevel"></div>
+                                <span id="energyValue">100%</span>
+                                <span id="energyRays">⚡⚡⚡</span>
+                            </div>
+                        </div>
+                    </div>
+                    <iframe src="http://192.168.0.251:3000/agentes/embed/<%= iframe %>?assistant_name=<%= botName %>"></iframe>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="lock-container">
+                    <h2 id="lockTitle">🔒 Sala Cerrada</h2>
+                    <div class="timer-container">
+                        <h2 class="timer" id="timer">00:00</h2>
+                    </div>
+                    <form class="lockbox" id="lockForm" autocomplete="off">
+                        <label for="password">Introduce la contraseña:</label>
+                        <input id="password" required autocomplete="off" placeholder="••••••••">
+                        <button type="submit">Desbloquear candado</button>
+                        <div id="message"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="<%= CONTEXT_PATH %>/script.js" onload="initEscapeRoom({
+        room: '<%= room %>', 
+        totalEnergy: <%= totalEnergy %>, 
+        inputWordsPenalty: <%= inputWordsPenalty %>,
+        outputWordsPenalty: <%= outputWordsPenalty %>,
+        failurePenalty: <%= failurePenalty %>,
+        timeLimit: <%= timeLimit %>,
+        allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
+        contextPath: '<%= CONTEXT_PATH %>'
+    })"></script>
+</body>
+</html> 

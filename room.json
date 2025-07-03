@@ -1,0 +1,58 @@
+{
+    "escape_1": {
+      "title": "Introducción",
+      "desc": "Conoce al creador del juego...",
+      "botName": "Arthur",
+      "iframe": "asst_aCyDRKjDgIHRrDhVdqgdQXAB",
+      "botTitle": "El escape room",
+      "room": "escape_1", 
+      "totalEnergy": 100, 
+      "inputWordsPenalty": 0.2,
+      "outputWordsPenalty": 0.1,
+      "failurePenalty": 10,
+      "timeLimit": 300,
+      "avaliable": ""
+    },
+    "escape_2": {
+      "title": "El restaurante de Li",
+      "desc": "Tu primer paso será el restaurante de Li",
+      "botName": "Li",
+      "iframe": "asst_RJuDFDBQeOJWao5BIRrrklni",
+      "botTitle": "El restaurante",
+      "room": "escape_2", 
+      "totalEnergy": 100, 
+      "inputWordsPenalty": 0.2,
+      "outputWordsPenalty": 0.1,
+      "failurePenalty": 10,
+      "timeLimit": 300,
+      "avaliable": "escape_1"
+    },
+    "escape_3": {
+      "title": "El laboratorio",
+      "desc": "El laboratorio será tu segunda parada",
+      "botName": "Trebor",
+      "iframe": "asst_PzLhAIZWrexGkOmhSZ6SWcyu",
+      "botTitle": "El laboratorio",
+      "room": "escape_3", 
+      "totalEnergy": 100, 
+      "inputWordsPenalty": 0.2,
+      "outputWordsPenalty": 0.1,
+      "failurePenalty": 10,
+      "timeLimit": 300,
+      "avaliable": "escape_2"
+    },
+    "escape_4": {
+      "title": "Viaje por el espacio",
+      "desc": "Tu última parada será el espacio",
+      "botName": "Gemma",
+      "iframe": "asst_hFnPQr1M7T1xGSMRAXeOgbfD",
+      "botTitle": "El espacio",
+      "room": "escape_4", 
+      "totalEnergy": 100, 
+      "inputWordsPenalty": 0.2,
+      "outputWordsPenalty": 0.1,
+      "failurePenalty": 10,
+      "timeLimit": 300,
+      "avaliable": "escape_3"
+    }
+}
