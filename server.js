@@ -58,13 +58,15 @@ app.get(CONTEXT_PATH, async (req, res) => {
 
 app.get(CONTEXT_PATH + '/:room', (req, res) => {
   const room = req.params.room;
+  const { escapp_email } = req.query;
   if (!rooms[room]) return res.status(404).send('Sala no encontrada');
   res.render('escape_room', {
     ...rooms[room],
     room,
     allowContinueAfterGameOver: ALLOW_CONTINUE_AFTER_GAME_OVER,
     CONTEXT_PATH,
-    IFRAME_URL
+    IFRAME_URL,
+    escapp_email: escapp_email || ''
   });
 });
 
