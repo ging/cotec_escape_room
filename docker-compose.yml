@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  escape-room-cotec:
+    build: .
+    container_name: escape-room-cotec
+    ports:
+      - "3004:${PORT:-3000}"
+    env_file:
+      - .env 
+    networks:
+      - martell
+    restart: unless-stopped
+    
+networks:
+  martell:
+    external: true
+    name: martell
