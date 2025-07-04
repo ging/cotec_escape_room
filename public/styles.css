@@ -1,3 +1,17 @@
+:root {
+    --rosa: rgb(237, 14, 143);
+    --verde: rgb(0, 236, 0);
+    --amarillo: rgb(250, 254, 3);
+    --azul-oscuro: rgb(35, 41, 228);
+    --morado: rgb(97, 35, 246);
+    --azul-claro: rgb(49, 206, 218);
+    --naranja: rgb(227, 74, 0);
+    --negro: rgb(0, 0, 0);
+    --gris-oscuro: rgb(153, 153, 153); /* 40% */
+    --gris-claro: rgb(237, 237, 237); /* 10% */
+  }
+
+
 /* Reset y configuración base */
 * {
     box-sizing: border-box;
@@ -5,8 +19,8 @@
 
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f5f5f7;
-    color: #222;
+    background: var(--gris-claro);
+    color: var(--negro);
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -32,7 +46,7 @@ h1 {
     margin: 0 0 20px 0;
     font-size: clamp(2rem, 5vw, 2.5rem);
     letter-spacing: 2px;
-    color: #222;
+    color: var(--negro);
 }
 
 .desc {
@@ -40,7 +54,7 @@ h1 {
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.6;
-    color: #555;
+    color: var(--negro);
 }
 
 /* Navegación de Escape Rooms */
@@ -52,7 +66,7 @@ h1 {
 .escape-rooms-nav h3 {
     margin: 0 0 20px 0;
     font-size: 1.5rem;
-    color: #333;
+    color: var(--negro);
 }
 
 .rooms-grid {
@@ -70,7 +84,7 @@ h1 {
 }
 
 .room-card {
-    background: #fff;
+    background: var(--gris-claro);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
@@ -81,31 +95,31 @@ h1 {
 .room-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    border-color: #007bff;
+    border-color: var(--azul-oscuro);
 }
 
 .room-card h4 {
     margin: 0 0 10px 0;
     font-size: 1.2rem;
-    color: #333;
+    color: var(--negro);
 }
 
 .room-card p {
     margin: 0;
-    color: #666;
+    color: var(--negro);
     font-size: 0.9rem;
 }
 
 .room-card.completed {
-    border: 2px solid #4caf50;
+    border: 2px solid var(--verde);
     background: #e8fbe8;
-    box-shadow: 0 0 10px 0 #4caf5040;
+    box-shadow: 0 0 10px 0 var(--verde);
     position: relative;
 }
 .room-card.completed::after {
     content: '✔ Completado';
-    color: #fff;
-    background: #4caf50;
+    color: var(--gris-claro);
+    background: var(--verde);
     font-size: 0.8rem;
     padding: 2px 8px;
     border-radius: 8px;
@@ -124,8 +138,8 @@ h1 {
 }
 .room-card.locked::after {
     content: '🔒 Bloqueada';
-    color: #fff;
-    background: #888;
+    color: var(--gris-claro);
+    background: var(--gris-oscuro);
     font-size: 0.8rem;
     padding: 2px 8px;
     border-radius: 8px;
@@ -160,7 +174,7 @@ h1 {
 
 /* Chatbot */
 .chatbot-container {
-    background: #fff;
+    background: var(--gris-claro);
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
     overflow: hidden;
@@ -175,8 +189,8 @@ h1 {
     align-items: center;
     justify-content: space-between;
     padding: 20px 20px 15px 20px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #e9ecef;
+    background: var(--gris-claro);
+    border-bottom: 1px solid var(--gris-oscuro);
     gap: 20px;
     flex-wrap: wrap;
 }
@@ -184,7 +198,7 @@ h1 {
 .chatbot-container h3 {
     margin: 0;
     font-size: 1.1rem;
-    color: #333;
+    color: var(--negro);
     flex-shrink: 0;
     white-space: nowrap;
 }
@@ -209,10 +223,10 @@ h1 {
 .battery {
     width: 100%;
     height: 24px;
-    border: 2px solid #ddd;
+    border: 2px solid var(--gris-oscuro);
     border-radius: 12px;
     position: relative;
-    background: #f0f0f0;
+    background: var(--gris-claro);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -222,7 +236,7 @@ h1 {
 .battery-level {
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #4caf50, #45a049);
+    background: linear-gradient(90deg, var(--verde), var(--verde));
     position: absolute;
     left: 0;
     top: 0;
@@ -232,7 +246,7 @@ h1 {
 
 #energyValue {
     font-weight: bold;
-    color: #333;
+    color: var(--negro);
     font-size: 0.9rem;
     z-index: 10;
     position: relative;
@@ -245,27 +259,27 @@ h1 {
     z-index: 10;
     position: relative;
     text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
-    color: #ffd700;
+    color: var(--amarillo);
 }
 
 /* Cuando la energía es baja, cambiar color */
 .battery-level.low {
-    background: linear-gradient(90deg, #ff5252, #d32f2f);
+    background: linear-gradient(90deg, var(--naranja), var(--naranja));
 }
 
 #energyValue.low {
-    color: #fff;
+    color: var(--gris-claro);
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 #energyRays.low {
-    color: #ffeb3b;
+    color: var(--amarillo);
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 /* Estados del candado */
 .lock-container.opened {
-    background: linear-gradient(135deg, #4caf50, #45a049);
+    background: linear-gradient(135deg, var(--verde), var(--verde));
     color: white;
 }
 
@@ -283,13 +297,13 @@ h1 {
 }
 
 .lock-container.opened .lockbox button {
-    background: linear-gradient(135deg, #fff, #f0f0f0);
-    color: #4caf50;
+    background: linear-gradient(135deg, var(--gris-claro), var(--gris-claro));
+    color: var(--verde);
     font-weight: bold;
 }
 
 .lock-container.opened .lockbox button:hover {
-    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    background: linear-gradient(135deg, var(--gris-claro), var(--gris-claro));
 }
 
 /* Estado de error temporal */
@@ -313,14 +327,14 @@ h1 {
 }
 
 .lock-container.error .lockbox button {
-    background: linear-gradient(135deg, #fff, #f0f0f0);
-    color: #ff5252;
+    background: linear-gradient(135deg, var(--gris-claro), var(--gris-claro));
+    color: var(--naranja);
     font-weight: bold;
 }
 
 /* Cofre */
 .lock-container {
-    background: #fff;
+    background: var(--gris-claro);
     padding: 30px;
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -354,24 +368,24 @@ h1 {
     padding: 12px 16px;
     font-size: 1.1rem;
     border-radius: 8px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--gris-oscuro);
     width: 100%;
     max-width: 250px;
     text-align: center;
-    background: #f8f9fa;
-    color: #222;
+    background: var(--gris-claro);
+    color: var(--negro);
     transition: border-color 0.3s ease;
 }
 
 .lockbox input[type="password"]:focus {
     outline: none;
-    border-color: #4caf50;
+    border-color: var(--verde);
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 .lockbox button {
-    background: linear-gradient(135deg, #ffb400, #ffd700);
-    color: #222;
+    background: linear-gradient(135deg, #ffb400, var(--amarillo));
+    color: var(--negro);
     border: none;
     padding: 12px 28px;
     border-radius: 8px;
@@ -440,7 +454,7 @@ h1 {
 }
 
 .timer-display.danger {
-    color: #ff5252;
+    color: var(--naranja);
     text-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
     animation: pulse 0.5s infinite;
 }
@@ -660,8 +674,8 @@ h1 {
 }
 
 .intro-desc {
-  background: #f9f6ff;
-  border: 2px solid #d1c4e9;
+  background: var(--gris-claro);
+  border: 2px solid var(--gris-oscuro);
   border-radius: 12px;
   padding: 18px 24px;
   margin-bottom: 24px;
@@ -670,12 +684,12 @@ h1 {
   width: 100%;
   box-sizing: border-box;
 }
-.intro-desc .highlight {
-  color: #7c3aed;
+.highlight {
+  color: var(--morado);
   font-weight: bold;
 }
-.intro-desc .suerte {
-  color: #388e3c;
+.suerte {
+  color: var(--verde);
   font-size: 1.2em;
   font-weight: bold;
   text-align: center;
