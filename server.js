@@ -9,6 +9,7 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sosten
 const CONTEXT_PATH = process.env.CONTEXT_PATH || '/sostenibilidadgenerativa';
 const ALLOW_CONTINUE_AFTER_GAME_OVER = process.env.ALLOW_CONTINUE_AFTER_GAME_OVER === 'true' || process.env.ALLOW_CONTINUE_AFTER_GAME_OVER === true || false;
 const IFRAME_URL = process.env.IFRAME_URL || 'http://localhost:3000/agentes/embed/';
+const WEB_PRINCIPAL_URL = process.env.WEB_PRINCIPAL_URL || ''
 const rooms = require('./room.json');
 
 const app = express();
@@ -17,12 +18,17 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use((req, res, next) => {
+  res.locals.WEB_PRINCIPAL_URL = WEB_PRINCIPAL_URL;
+  next();
+});
+
 // Diccionario de códigos correctos
 const codigos = {
-  escape_1: '1310',
-  escape_2: '3197',
-  escape_3: '6934',
-  escape_4: '11829',
+  escape_1: ['1310', "P"],
+  escape_2: ['3197', "1"],
+  escape_3: ['6934', "A"],
+  escape_4: ['11829', "4"],
 };
 
 // Conexión a MongoDB
@@ -91,7 +97,7 @@ app.post(CONTEXT_PATH + '/api/validate', async (req, res) => {
   const { room, code, escapp_email, assistant_id, thread_id, run_id, remaining_time, remaining_energy } = req.body;
   let completed = false;
   
-  if (codigos[room] && codigos[room] === code) {
+  if (codigos[room] && codigos[room][0] === code) {
     completed = true;
   }
   // Log para control
@@ -117,10 +123,47 @@ app.post(CONTEXT_PATH + '/api/validate', async (req, res) => {
     } catch (err) {
       console.error('Error guardando en MongoDB:', err);
     }
+    const finalCode = completed ? codigos[room][1] : "";
 
-  res.json({ completed, room });
+  res.json({ completed, room, finalCode });
 });
 
+// API para validar códigos
+app.post(CONTEXT_PATH + '/api/validateAlreadyCompleted', async (req, res) => {
+  console.log(req.body)
+  const { room, escapp_email } = req.body;
+  // Guardar MongoDB
+    let completed  = false;
+    let finalCode = "";
+    try {
+      const result = await Result.findOne({
+        escapp_email,
+        completed: true,
+        room
+      });
+      completed = !!result;
+      finalCode = completed ? codigos[room][1] : "";
+    } catch (err) {
+      console.error('Error consultando en MongoDB:', err);
+    }
+
+    res.json({ completed, finalCode });
+});
+
+
+// API para validar códigos
+app.post(CONTEXT_PATH + '/api/validateFinalCode', async (req, res) => {
+  const { final_code } = req.body;
+    let completed  = false;
+    const finalCodeReal = Object.values(codigos)
+      .map(c => c[1])
+      .join('');  
+    if (final_code === finalCodeReal) {
+      completed = true;
+    }
+
+    res.json({ completed });
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}${CONTEXT_PATH}`);

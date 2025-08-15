@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escape Room Cotec</title>
+    <title>Sostenibilidad Generativa</title>
     <link rel="stylesheet" href="<%= CONTEXT_PATH %>/styles.css">
 </head>
 <body>
+    <header>
+        <img src="<%= CONTEXT_PATH %>/imgs/sg-logo.png" alt="Logo" style="height: 40px; cursor: pointer;" onclick="backToMenu('<%= WEB_PRINCIPAL_URL %>', '<%= CONTEXT_PATH %>')">
+    </header>
     <div class="container">
-        <header class="header">
+        <intro class="intro">
             <h1><%= title %></h1>
             <div class="desc">
                 <%= desc %>
             </div>
+            <div id="already-completed" class ="desc" style="color:var(--verde-claro);"></div>
             <div class="desc">
                 Recuerda que para <span class="highlight">ahorrar energía</span> debes usar técnicas de prompt eficientes. Puedes consultar <span class="highlight">nuestra guía de buenas prácticas</span><i>(Próximamente)</i>
             </div>
-        </header>
+        </intro>
         <main class="main-content">
             <div class="left-panel">
                 <div class="chatbot-container">
-                    <div class="chatbot-header">
+                    <div class="chatbot-intro">
                         <h3>💬 <%= botTitle %></h3>
                         <div class="energy-container">
                             <div class="battery">
@@ -49,6 +53,20 @@
             </div>
         </main>
     </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-collaborators">
+                <div class="logos-container">
+                    <img src="<%= CONTEXT_PATH %>/imgs/cotec-logo.png" alt="COTEC">
+                    <img src="<%= CONTEXT_PATH %>/imgs/GING-logo.png" alt="GING">
+                    <img src="<%= CONTEXT_PATH %>/imgs/UPM-logo.png" alt="Universidad Politécnica de Madrid">
+                </div>
+            </div>
+        </div>
+    </footer>
+    
     <script src="<%= CONTEXT_PATH %>/script.js" onload="initEscapeRoom({
         room: '<%= room %>', 
         totalEnergy: <%= totalEnergy %>, 
@@ -57,7 +75,8 @@
         failurePenalty: <%= failurePenalty %>,
         timeLimit: <%= timeLimit %>,
         allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
-        contextPath: '<%= CONTEXT_PATH %>'
+        contextPath: '<%= CONTEXT_PATH %>',
+        webPrincipalUrl: '<%= WEB_PRINCIPAL_URL %>'
     })"></script>
 </body>
 </html> 

@@ -1,14 +1,19 @@
 :root {
     --rosa: rgb(237, 14, 143);
-    --verde: rgb(0, 236, 0);
+    --verde-claro: rgb(0, 236, 0);
+    --verde: #4caf50;
     --amarillo: rgb(250, 254, 3);
     --azul-oscuro: rgb(35, 41, 228);
     --morado: rgb(97, 35, 246);
     --azul-claro: rgb(49, 206, 218);
     --naranja: rgb(227, 74, 0);
     --negro: rgb(0, 0, 0);
-    --gris-oscuro: rgb(153, 153, 153); /* 40% */
+    --gris-mas-oscuro: rgb(27 31 29);
+    --gris-oscuro: rgb(43, 45, 44);
+    --gris-medio: rgb(66, 68, 67);
     --gris-claro: rgb(237, 237, 237); /* 10% */
+    --blanco: #fff;
+
   }
 
 
@@ -19,11 +24,22 @@
 
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--gris-claro);
-    color: var(--negro);
+    background-color: var(--gris-mas-oscuro);
+    color: var(--blanco);
     margin: 0;
     padding: 0;
     min-height: 100vh;
+}
+
+header {
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+header img {
+    max-width: 100%;
 }
 
 /* Contenedor principal */
@@ -36,8 +52,8 @@ body {
     flex-direction: column;
 }
 
-/* Header */
-.header {
+/* intro */
+.intro {
     text-align: center;
     margin-bottom: 30px;
 }
@@ -46,7 +62,11 @@ h1 {
     margin: 0 0 20px 0;
     font-size: clamp(2rem, 5vw, 2.5rem);
     letter-spacing: 2px;
-    color: var(--negro);
+}
+
+.large {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    font-weight: bold;
 }
 
 .desc {
@@ -54,7 +74,6 @@ h1 {
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.6;
-    color: var(--negro);
 }
 
 /* Navegación de Escape Rooms */
@@ -66,7 +85,6 @@ h1 {
 .escape-rooms-nav h3 {
     margin: 0 0 20px 0;
     font-size: 1.5rem;
-    color: var(--negro);
 }
 
 .rooms-grid {
@@ -84,7 +102,7 @@ h1 {
 }
 
 .room-card {
-    background: var(--gris-claro);
+    background: var(--gris-oscuro);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
@@ -95,24 +113,21 @@ h1 {
 .room-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    border-color: var(--azul-oscuro);
+    border-color: var(--verde-claro);
 }
 
 .room-card h4 {
     margin: 0 0 10px 0;
     font-size: 1.2rem;
-    color: var(--negro);
 }
 
 .room-card p {
     margin: 0;
-    color: var(--negro);
     font-size: 0.9rem;
 }
 
 .room-card.completed {
     border: 2px solid var(--verde);
-    background: #e8fbe8;
     box-shadow: 0 0 10px 0 var(--verde);
     position: relative;
 }
@@ -139,7 +154,7 @@ h1 {
 .room-card.locked::after {
     content: '🔒 Bloqueada';
     color: var(--gris-claro);
-    background: var(--gris-oscuro);
+    background: var(--gris-medio);
     font-size: 0.8rem;
     padding: 2px 8px;
     border-radius: 8px;
@@ -184,13 +199,13 @@ h1 {
     max-width: 100%;
 }
 
-.chatbot-header {
+.chatbot-intro {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 20px 15px 20px;
     background: var(--gris-claro);
-    border-bottom: 1px solid var(--gris-oscuro);
+    border-bottom: 1px solid var(--gris-medio);
     gap: 20px;
     flex-wrap: wrap;
 }
@@ -198,7 +213,6 @@ h1 {
 .chatbot-container h3 {
     margin: 0;
     font-size: 1.1rem;
-    color: var(--negro);
     flex-shrink: 0;
     white-space: nowrap;
 }
@@ -223,7 +237,7 @@ h1 {
 .battery {
     width: 100%;
     height: 24px;
-    border: 2px solid var(--gris-oscuro);
+    border: 2px solid var(--gris-medio);
     border-radius: 12px;
     position: relative;
     background: var(--gris-claro);
@@ -246,7 +260,6 @@ h1 {
 
 #energyValue {
     font-weight: bold;
-    color: var(--negro);
     font-size: 0.9rem;
     z-index: 10;
     position: relative;
@@ -259,7 +272,7 @@ h1 {
     z-index: 10;
     position: relative;
     text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
-    color: var(--amarillo);
+    color: var(--verde-claro);
 }
 
 /* Cuando la energía es baja, cambiar color */
@@ -277,18 +290,19 @@ h1 {
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
+
+
 /* Estados del candado */
 .lock-container.opened {
     background: linear-gradient(135deg, var(--verde), var(--verde));
-    color: white;
 }
 
 .lock-container.opened h2 {
-    color: white;
+        color: var(--blanco);
 }
 
 .lock-container.opened .lockbox label {
-    color: white;
+    color: var(--blanco);
 }
 
 .lock-container.opened .lockbox input[type="password"] {
@@ -306,19 +320,19 @@ h1 {
     background: linear-gradient(135deg, var(--gris-claro), var(--gris-claro));
 }
 
+
 /* Estado de error temporal */
 .lock-container.error {
     background: linear-gradient(135deg, #ff5252, #d32f2f);
-    color: white;
     transition: background 0.3s ease;
 }
 
 .lock-container.error h2 {
-    color: white;
+    color: var(--blanco);
 }
 
 .lock-container.error .lockbox label {
-    color: white;
+    color: var(--blanco);
 }
 
 .lock-container.error .lockbox input[type="password"] {
@@ -347,7 +361,6 @@ h1 {
     margin: 0 0 25px 0;
     text-align: center;
     font-size: 1.5rem;
-    color: #333;
 }
 
 .lockbox {
@@ -359,7 +372,6 @@ h1 {
 
 .lockbox label {
     font-size: 1.1rem;
-    color: #333;
     font-weight: 500;
     text-align: center;
 }
@@ -368,12 +380,12 @@ h1 {
     padding: 12px 16px;
     font-size: 1.1rem;
     border-radius: 8px;
-    border: 2px solid var(--gris-oscuro);
+    border: 2px solid var(--gris-medio);
     width: 100%;
     max-width: 250px;
     text-align: center;
     background: var(--gris-claro);
-    color: var(--negro);
+    color: var(--blanco);
     transition: border-color 0.3s ease;
 }
 
@@ -381,11 +393,12 @@ h1 {
     outline: none;
     border-color: var(--verde);
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    background-color: blue;
 }
 
 .lockbox button {
-    background: linear-gradient(135deg, #ffb400, var(--amarillo));
-    color: var(--negro);
+    background: var(--gris-medio);
+    color: var(--verde-claro);
     border: none;
     padding: 12px 28px;
     border-radius: 8px;
@@ -393,13 +406,12 @@ h1 {
     cursor: pointer;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(255, 180, 0, 0.3);
+    /* box-shadow: 0 2px 8px rgba(255, 180, 0, 0.3); */
 }
 
 .lockbox button:hover {
-    background: linear-gradient(135deg, #ffd700, #ffed4e);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 180, 0, 0.4);
+    background: var(--verde-claro);
+    color: var(--negro);
 }
 
 .lockbox button:active {
@@ -435,7 +447,7 @@ h1 {
     font-size: 2rem;
     font-weight: bold;
     font-family: 'Courier New', monospace;
-    color: #fff;
+    color: var(--blanco);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     margin-bottom: 5px;
 }
@@ -463,6 +475,16 @@ h1 {
     0% { opacity: 1; }
     50% { opacity: 0.7; }
     100% { opacity: 1; }
+}
+
+
+.lock-container {
+    padding: 20px;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: var(--gris-oscuro);
+    border-color: hsla(0,0%,100%,.2);
 }
 
 /* Responsive Design */
@@ -522,7 +544,7 @@ h1 {
         min-height: 450px;
     }
     
-    .chatbot-header {
+    .chatbot-intro {
         flex-direction: column;
         align-items: stretch;
         gap: 15px;
@@ -578,7 +600,7 @@ h1 {
         padding: 10px;
     }
     
-    .header {
+    .intro {
         margin-bottom: 20px;
     }
     
@@ -588,7 +610,7 @@ h1 {
         min-height: 400px;
     }
     
-    .chatbot-header {
+    .chatbot-intro {
         padding: 12px 12px 8px 12px;
         gap: 10px;
     }
@@ -601,11 +623,6 @@ h1 {
         height: calc(80vh - 60px);
         min-height: 350px;
         flex: 1;
-    }
-    
-    .lock-container {
-        padding: 20px;
-        border-radius: 12px;
     }
     
     .lockbox input[type="password"] {
@@ -674,8 +691,8 @@ h1 {
 }
 
 .intro-desc {
-  background: var(--gris-claro);
-  border: 2px solid var(--gris-oscuro);
+  background: var(--gris-oscuro);
+  border: 2px solid var(--gris-medio);
   border-radius: 12px;
   padding: 18px 24px;
   margin-bottom: 24px;
@@ -685,7 +702,7 @@ h1 {
   box-sizing: border-box;
 }
 .highlight {
-  color: var(--morado);
+  color: var(--verde-claro);
   font-weight: bold;
 }
 .suerte {
@@ -694,4 +711,62 @@ h1 {
   font-weight: bold;
   text-align: center;
   margin-top: 12px;
+}
+
+/* Footer */
+.footer {
+    background: var(--negro);
+    padding: 30px 20px;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+
+
+.logos-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.logos-container img {
+    height: 60px;
+    max-width: 150px;
+}
+
+
+/* Responsive footer */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .logos-container {
+        gap: 20px;
+    }
+    
+    .logos-container img {
+        height: 50px;
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logos-container {
+        flex-direction: column;
+        gap: 15px;
+    }
 }

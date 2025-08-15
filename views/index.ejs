@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escape Room Cotec</title>
+    <title>Sostenibilidad Generativa</title>
     <link rel="stylesheet" href="<%= CONTEXT_PATH %>/styles.css">
 </head>
 <body>
+    <!-- intro -->
+    <header>
+        <img src="<%= CONTEXT_PATH %>/imgs/sg-logo.png" alt="Logo" style="height: 40px;">
+    </header>
+
     <script>
       let completedRooms = [];
       if (!localStorage.getItem('escapp_email')) {
@@ -21,6 +26,8 @@
         const response = await fetch('<%= CONTEXT_PATH %>/api/completedRooms?escapp_email=' + localStorage.getItem('escapp_email'));
         const data = await response.json();
         completedRooms = data.completedRooms;
+        console.log(completedRooms)
+        localStorage.setItem('completedRooms', JSON.stringify(completedRooms));
 
         // Marcar las rooms completadas en la interfaz
         document.querySelectorAll('.room-link').forEach(link => {
@@ -42,8 +49,8 @@
 
     </script>
     <div class="container">
-        <header class="header">
-            <h1>Escape Room Cotec</h1>
+        <intro class="intro">
+            <h1>Sostenibilidad Generativa</h1>
             <div class="desc intro-desc">
                 <p>¡<strong>Bienvenido/a al escape room de Sostenibilidad Generativa</strong>! 🕵️‍♂️ Para abrir la sala, deberás interactuar con el <strong>chatbot</strong> y descubrir la <span class="highlight">contraseña oculta</span> 🔑.</p>
                 <p>Cuando la tengas, introdúcela en el candado para salir de la sala.</p>
@@ -53,7 +60,7 @@
                 Por lo tanto debes diseñar <strong>estrategias de prompt efectivas</strong> 📝.</p>
                 <p class="suerte">¡¡<strong>Mucha suerte</strong>!! 🍀</p>
             </div>
-        </header>
+        </intro>
         <nav class="escape-rooms-nav">
             <h3>Salas disponibles</h3>
             <div class="rooms-grid">
@@ -68,5 +75,17 @@
             </div>
         </nav>
     </div>
+        <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-collaborators">
+                <div class="logos-container">
+                    <img src="<%= CONTEXT_PATH %>/imgs/cotec-logo.png" alt="COTEC">
+                    <img src="<%= CONTEXT_PATH %>/imgs/GING-logo.png" alt="GING">
+                    <img src="<%= CONTEXT_PATH %>/imgs/UPM-logo.png" alt="Universidad Politécnica de Madrid">
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html> 

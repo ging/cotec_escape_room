@@ -7,10 +7,11 @@ function initEscapeRoom(config) {
         failurePenalty = 10,
         timeLimit = 300, // 5 minutos por defecto
         allowContinueAfterGameOver = false,
-        contextPath = "/sostenibilidadgenerativa"
+        contextPath = "/sostenibilidadgenerativa",
+        webPrincipalUrl = ""
     } = config || {};
 
-    console.log("config", config);
+    // console.log("config", config);
 
     let totalInputWords = 0;
     let totalOutputWords = 0;
@@ -31,6 +32,7 @@ function initEscapeRoom(config) {
     const submitButton = document.querySelector('button[type="submit"]');
 
     // Obtener escapp_email de localStorage o pedirlo si no existe
+
     let escapp_email = localStorage.getItem('escapp_email');
     if (!escapp_email) {
         while (!escapp_email || !/^\S+@\S+\.\S+$/.test(escapp_email)) {
@@ -44,7 +46,25 @@ function initEscapeRoom(config) {
         messageDiv.className = "error";
         return;
     }
-    
+
+    async function fetchAlreadyCompleted() {
+        try {
+            const response = await fetch(contextPath + '/api/validateAlreadyCompleted', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ room, escapp_email })
+            });
+            const data = await response.json();
+            if (data.completed === true) {
+                document.getElementById('already-completed').innerHTML = `<p>Esta sala ya la has completado y has descubierto su código: <span class="large">${data.finalCode || ""}</span></p>`;
+            }
+        } catch (err) {
+            console.error('Error consultando si la sala está completada:', err);
+        }
+    }
+
+    fetchAlreadyCompleted();
+
     // Función para actualizar el cronómetro
     function updateTimer() {
         let minutes;
@@ -70,8 +90,8 @@ function initEscapeRoom(config) {
         // Verificar si se acabó el tiempo después de mostrar 00:00
         if (remaining_time <= 0 && !isGameOver) {
             //remaining_time = 0; -> TBD Descomentar
-            console.log('Tiempo agotado');
-            console.log('remaining_time', remaining_time);
+            // console.log('Tiempo agotado');
+            // console.log('remaining_time', remaining_time);
             gameOver();
             return;
         }
@@ -149,8 +169,8 @@ function initEscapeRoom(config) {
         
         // Verificar si se acabó la energía
         if (remaining_energy <= 0 && !isGameOver) {
-            console.log('Energía agotada');
-            console.log('remaining_energy', remaining_energy);
+            // console.log('Energía agotada');
+            // console.log('remaining_energy', remaining_energy);
             gameOver();
         }
         
@@ -192,11 +212,11 @@ function initEscapeRoom(config) {
         // Manejar diferentes tipos de eventos
         switch(type) {
             case 'iframe_loaded':
-                console.log('Chatbot iframe cargado:', data);
+                // console.log('Chatbot iframe cargado:', data);
                 assistant_id = data.assistantId;
                 break;
             case 'chat_created':
-                console.log('Chat creado', data);
+                // console.log('Chat creado', data);
                 thread_id = data.threadId;
                 await fetch('api/validate', {
                     method: 'POST',
@@ -206,14 +226,14 @@ function initEscapeRoom(config) {
                 break;
                                 
             case 'message_sent':
-                console.log('Mensaje enviado:', data);
+                // console.log('Mensaje enviado:', data);
                 const inputWords = data.message.split(/\s+/).length;
                 totalInputWords += inputWords;
                 break;
                 
             case 'response_received':
                 run_id = data.runId;
-                console.log('Respuesta recibida:', data);
+                // console.log('Respuesta recibida:', data);
                 if (data.response) {
                     const responseWords = data.response.split(/\s+/).length;
                     totalOutputWords += responseWords;
@@ -226,7 +246,7 @@ function initEscapeRoom(config) {
                 break;
                 
             default:
-                console.log('Evento no manejado:', type, data);
+                // console.log('Evento no manejado:', type, data);
         }
         updateBatteryStyle();
     }
@@ -277,17 +297,16 @@ function initEscapeRoom(config) {
                 const lockTitle = document.getElementById('lockTitle');
                 lockTitle.textContent = "🔓 Sala Abierta";
                 lockTitle.innerHTML = "🔓 Sala Abierta";
-                submitButton.textContent = "Vuelve al menú";
+                submitButton.textContent = "Volver al menú";
                 submitButton.onclick = () => {
-                    window.location.href = contextPath + '/';
+                    backToMenu(webPrincipalUrl, contextPath);
                 };
                 lockContainer.classList.add('opened');
                 lockContainer.classList.remove('error');
-                messageDiv.textContent = "¡Sala abierta! Has resuelto el enigma 🎉";
+                messageDiv.innerHTML = `¡Sala abierta! Has resuelto el enigma 🎉. El código de esta sala es: <span class="large">${data.finalCode || ""}</span>`;
                 messageDiv.className = "success";
                 passwordInput.disabled = true;
                 timerElement.className = 'timer';
-                timerElement.style.color = '#4caf50';
             } else {
                 lockContainer.classList.add('error');
                 messageDiv.textContent = `Contraseña incorrecta. Acabas de perder ${failurePenalty} puntos de energía. ¡Sigue intentándolo! `;
@@ -308,4 +327,9 @@ function initEscapeRoom(config) {
     
     // Iniciar el temporizador cuando se carga la página
     startTimer();
+}
+
+
+function backToMenu(uri, contextPath) {
+    window.location.href = uri || contextPath + '/';
 }
