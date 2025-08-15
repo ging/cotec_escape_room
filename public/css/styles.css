@@ -2,6 +2,7 @@
     --rosa: rgb(237, 14, 143);
     --verde-claro: rgb(0, 236, 0);
     --verde: #4caf50;
+    --verde-oscuro: rgba(5,56,45,.8);
     --amarillo: rgb(250, 254, 3);
     --azul-oscuro: rgb(35, 41, 228);
     --morado: rgb(97, 35, 246);
@@ -13,7 +14,6 @@
     --gris-medio: rgb(66, 68, 67);
     --gris-claro: rgb(237, 237, 237); /* 10% */
     --blanco: #fff;
-
   }
 
 
@@ -204,7 +204,7 @@ h1 {
     align-items: center;
     justify-content: space-between;
     padding: 20px 20px 15px 20px;
-    background: var(--gris-claro);
+    background: var(--verde-oscuro);
     border-bottom: 1px solid var(--gris-medio);
     gap: 20px;
     flex-wrap: wrap;
@@ -459,17 +459,18 @@ h1 {
 }
 
 /* Estados del cronómetro */
-.timer-display.warning {
+.warning {
     color: #ffd700;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     animation: pulse 1s infinite;
 }
 
-.timer-display.danger {
+.danger {
     color: var(--naranja);
     text-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
     animation: pulse 0.5s infinite;
 }
+
 
 @keyframes pulse {
     0% { opacity: 1; }
@@ -770,3 +771,9 @@ h1 {
         gap: 15px;
     }
 }
+
+#iframeEscape {
+    display: none;
+}
+
+

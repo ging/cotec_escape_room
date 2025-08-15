@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sostenibilidad Generativa</title>
-    <link rel="stylesheet" href="<%= CONTEXT_PATH %>/styles.css">
+    <link rel="stylesheet" href="<%= CONTEXT_PATH %>/css/styles.css">
 </head>
 <body>
     <header>
@@ -25,7 +25,7 @@
             <div class="left-panel">
                 <div class="chatbot-container">
                     <div class="chatbot-intro">
-                        <h3>💬 <%= botTitle %></h3>
+                        <h3><%= botTitle %></h3>
                         <div class="energy-container">
                             <div class="battery">
                                 <div class="battery-level" id="batteryLevel"></div>
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <iframe src="<%=IFRAME_URL%>/embed/<%= iframe %>?assistant_name=<%= botName %>&escapp_email=<%= escapp_email %>"></iframe>
+                    <iframe id="iframeEscape" src="<%=IFRAME_URL%>/embed/<%= iframe %>?assistant_name=<%= botName %>&escapp_email=<%= escapp_email %>"></iframe>
                 </div>
             </div>
             <div class="right-panel">
@@ -67,7 +67,7 @@
         </div>
     </footer>
     
-    <script src="<%= CONTEXT_PATH %>/script.js" onload="initEscapeRoom({
+    <script src="<%= CONTEXT_PATH %>/js/script.js" onload="initEscapeRoom({
         room: '<%= room %>', 
         totalEnergy: <%= totalEnergy %>, 
         inputWordsPenalty: <%= inputWordsPenalty %>,
@@ -76,7 +76,8 @@
         timeLimit: <%= timeLimit %>,
         allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
         contextPath: '<%= CONTEXT_PATH %>',
-        webPrincipalUrl: '<%= WEB_PRINCIPAL_URL %>'
+        webPrincipalUrl: '<%= WEB_PRINCIPAL_URL %>',
+        newCSS: `<%= newCSSIframe %>`
     })"></script>
 </body>
 </html> 

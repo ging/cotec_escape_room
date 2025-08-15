@@ -11,6 +11,9 @@ const ALLOW_CONTINUE_AFTER_GAME_OVER = process.env.ALLOW_CONTINUE_AFTER_GAME_OVE
 const IFRAME_URL = process.env.IFRAME_URL || 'http://localhost:3000/agentes/embed/';
 const WEB_PRINCIPAL_URL = process.env.WEB_PRINCIPAL_URL || ''
 const rooms = require('./room.json');
+const fs = require('fs').promises;
+
+
 
 const app = express();
 
@@ -62,9 +65,17 @@ app.get(CONTEXT_PATH, async (req, res) => {
   res.render('index', { rooms, CONTEXT_PATH });
 });
 
-app.get(CONTEXT_PATH + '/:room', (req, res) => {
+app.get(CONTEXT_PATH + '/:room', async (req, res) => {
   const room = req.params.room;
   const { escapp_email } = req.query;
+  const cssPath = path.join(__dirname, 'public', 'css', 'iframe.css');
+  let newCSSIframe = '';
+  try {
+      const cssContent = await fs.readFile(cssPath, 'utf-8');
+      newCSSIframe = cssContent;
+  } catch (err) {
+      console.error('Error leyendo el CSS:', err);
+  }
   if (!rooms[room]) return res.status(404).send('Sala no encontrada');
   res.render('escape_room', {
     ...rooms[room],
@@ -72,7 +83,8 @@ app.get(CONTEXT_PATH + '/:room', (req, res) => {
     allowContinueAfterGameOver: ALLOW_CONTINUE_AFTER_GAME_OVER,
     CONTEXT_PATH,
     IFRAME_URL,
-    escapp_email: escapp_email || ''
+    escapp_email: escapp_email || '',
+    newCSSIframe
   });
 });
 
@@ -154,11 +166,12 @@ app.post(CONTEXT_PATH + '/api/validateAlreadyCompleted', async (req, res) => {
 // API para validar códigos
 app.post(CONTEXT_PATH + '/api/validateFinalCode', async (req, res) => {
   const { final_code } = req.body;
-    let completed  = false;
-    const finalCodeReal = Object.values(codigos)
-      .map(c => c[1])
-      .join('');  
-    if (final_code === finalCodeReal) {
+  console.log("Trying final code:", final_code);
+  let completed  = false;
+  const finalCodeReal = Object.values(codigos)
+    .map(c => c[1])
+    .join('');  
+  if (final_code.toLowerCase() === finalCodeReal.toLowerCase()) {
       completed = true;
     }
 

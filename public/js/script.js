@@ -1,3 +1,18 @@
+function backToMenu(uri, contextPath) {
+    window.location.href = uri || contextPath + '/';
+}
+
+// Change the CSS of the iframe
+function updateCSSIframe(newCSS) {
+    const iframeEscape = document.getElementById('iframeEscape');
+    console.log("CHANGING CSS");
+    // Mandar un mensaje con instrucciones de estilo al iframe
+    iframeEscape.contentWindow.postMessage({
+    type: "changeCSS",
+    message: newCSS
+    }, "*");
+}
+
 function initEscapeRoom(config) {
     const {
         room = "escape_1",
@@ -8,7 +23,8 @@ function initEscapeRoom(config) {
         timeLimit = 300, // 5 minutos por defecto
         allowContinueAfterGameOver = false,
         contextPath = "/sostenibilidadgenerativa",
-        webPrincipalUrl = ""
+        webPrincipalUrl = "",
+        newCSS = "",
     } = config || {};
 
     // console.log("config", config);
@@ -75,9 +91,18 @@ function initEscapeRoom(config) {
         minutes = Math.ceil(remaining_time/60);
         }
         const seconds = remaining_time % 60;
-        
-        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        
+        let textMinutes = minutes.toString();
+        let textSeconds = seconds.toString();
+        textMinutes = textMinutes.replace('-', '');
+        textSeconds = textSeconds.replace('-', '');
+        textMinutes = textMinutes.padStart(2, '0');
+        textSeconds = textSeconds.padStart(2, '0');
+        if (remaining_time < 0) {
+            textMinutes = '- ' + textMinutes; //to avoid double negative
+        }
+
+        timerElement.textContent = `${textMinutes}:${textSeconds}`;
+
         // Cambiar colores según el tiempo restante
         if (remaining_time <= 30) {
             timerElement.className = 'timer danger';
@@ -212,8 +237,11 @@ function initEscapeRoom(config) {
         // Manejar diferentes tipos de eventos
         switch(type) {
             case 'iframe_loaded':
-                // console.log('Chatbot iframe cargado:', data);
+                console.log('Chatbot iframe cargado:', data);
                 assistant_id = data.assistantId;
+                updateCSSIframe(config.newCSS);
+                document.getElementById('iframeEscape').style.display = 'block';
+
                 break;
             case 'chat_created':
                 // console.log('Chat creado', data);
@@ -327,9 +355,4 @@ function initEscapeRoom(config) {
     
     // Iniciar el temporizador cuando se carga la página
     startTimer();
-}
-
-
-function backToMenu(uri, contextPath) {
-    window.location.href = uri || contextPath + '/';
 }
