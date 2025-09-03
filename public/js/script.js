@@ -1,5 +1,5 @@
 function backToMenu(uri, contextPath) {
-    window.location.href = uri || contextPath + '/';
+    window.location.href = uri + '/challenges' || contextPath + '/';
 }
 
 // Change the CSS of the iframe
@@ -43,6 +43,7 @@ function initEscapeRoom(config) {
     const batteryLevel = document.getElementById('batteryLevel');
     const energyValue = document.getElementById('energyValue');
     const timerElement = document.getElementById('timer');
+    const iframeVideo = document.getElementById('babyShark');
     const lockContainer = document.querySelector('.lock-container');
     const passwordInput = document.getElementById('password');
     const submitButton = document.querySelector('button[type="submit"]');
@@ -72,7 +73,7 @@ function initEscapeRoom(config) {
             });
             const data = await response.json();
             if (data.completed === true) {
-                document.getElementById('already-completed').innerHTML = `<p>Esta sala ya la has completado y has descubierto su código: <span class="large">${data.finalCode || ""}</span></p>`;
+                document.getElementById('already-completed').innerHTML = `<p class="large" id="already-completed-message">🎉🎉🎉 Sala completada su código es: <span class="large">${data.finalCode || ""}</span>🎉🎉🎉</p>`;
             }
         } catch (err) {
             console.error('Error consultando si la sala está completada:', err);
@@ -152,7 +153,7 @@ function initEscapeRoom(config) {
         isGameOver = true;
         
 
-        // Bloquear el candado
+        // Bloquear el ordenador
         lockContainer.classList.add('error');
         lockContainer.classList.remove('opened');
 
@@ -160,6 +161,11 @@ function initEscapeRoom(config) {
             // Deshabilitar el formulario
             passwordInput.disabled = true;
             submitButton.disabled = true;
+            submitButton.style.cursor = "not-allowed";
+            document.getElementById('backMenu').style.display = "block";
+            iframeEscape.style.pointerEvents = "none";
+            iframeVideo.style.display = "block";
+            iframeVideo.src = "https://www.youtube.com/embed/XqZsoesa55w?start=31&autoplay=1&controls=0";
         }
         
         // Determinar el motivo del game over
@@ -168,11 +174,11 @@ function initEscapeRoom(config) {
         
         if (remaining_energy <= 0) {
             gameOverTitle = "🔋 Energía Agotada";
-            gameOverMessage = "¡Se acabó la energía! El candado se ha bloqueado permanentemente.";
+            gameOverMessage = "¡Se acabó la energía! Hemos perdido la conexión con el asistente.";
             submitButton.textContent = "Energía agotada";
         } else {
             gameOverTitle = "⏰ Tiempo Agotado";
-            gameOverMessage = "¡Se acabó el tiempo! El candado se ha bloqueado permanentemente.";
+            gameOverMessage = "¡Se acabó el tiempo! Hemos perdido la conexión con el asistente.";
             submitButton.textContent = "Tiempo agotado";
         }
         
@@ -321,20 +327,22 @@ function initEscapeRoom(config) {
             if (data.completed === true) {
                 // Detener el temporizador
                 stopTimer();
-                // Cambiar el estado del candado a abierto
+                // Cambiar el estado del ordenador a abierto
                 const lockTitle = document.getElementById('lockTitle');
-                lockTitle.textContent = "🔓 Sala Abierta";
-                lockTitle.innerHTML = "🔓 Sala Abierta";
+                lockTitle.textContent = "🔓 Ordenador Debloqueado";
+                lockTitle.innerHTML = "🔓 Ordenador Debloqueado";
                 submitButton.textContent = "Volver al menú";
                 submitButton.onclick = () => {
                     backToMenu(webPrincipalUrl, contextPath);
                 };
                 lockContainer.classList.add('opened');
                 lockContainer.classList.remove('error');
-                messageDiv.innerHTML = `¡Sala abierta! Has resuelto el enigma 🎉. El código de esta sala es: <span class="large">${data.finalCode || ""}</span>`;
+                messageDiv.innerHTML = `¡Ordenador desbloqueado! Has resuelto el enigma 🎉. El código de este ordenador es: <span class="large">${data.finalCode || ""}</span>`;
                 messageDiv.className = "success";
                 passwordInput.disabled = true;
                 timerElement.className = 'timer';
+                iframeEscape.style.pointerEvents = "none";
+                document.getElementById('backMenu').style.display = "block";
             } else {
                 lockContainer.classList.add('error');
                 messageDiv.textContent = `Contraseña incorrecta. Acabas de perder ${failurePenalty} puntos de energía. ¡Sigue intentándolo! `;

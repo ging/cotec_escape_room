@@ -292,7 +292,7 @@ h1 {
 
 
 
-/* Estados del candado */
+/* Estados del ordenador */
 .lock-container.opened {
     background: linear-gradient(135deg, var(--verde), var(--verde));
 }
@@ -774,6 +774,39 @@ h1 {
 
 #iframeEscape {
     display: none;
+}
+
+a {
+    color: var(--verde-claro);
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+#already-completed-message {
+    animation: blink 1s step-start 0s infinite;
+}
+
+@keyframes blink {
+    0% {
+        color: var(--verde-claro);
+    }
+    50% {
+        color: white;
+    }
+    100% {
+        color: var(--verde-claro);
+    }
+}
+
+.fixed-center {
+  position: fixed;       /* Fija el elemento en la pantalla */
+  top: 50%;              /* Centrado vertical */
+  left: 50%;             /* Centrado horizontal */
+  transform: translate(-50%, -50%); /* Ajusta para centrar exactamente */
+  z-index: 9999;         /* Se asegura que esté por encima de otros elementos */
+  text-align: center;    /* Centrado del texto */
 }
 
 

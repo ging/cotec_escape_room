@@ -18,7 +18,7 @@
             </div>
             <div id="already-completed" class ="desc" style="color:var(--verde-claro);"></div>
             <div class="desc">
-                Recuerda que para <span class="highlight">ahorrar energía</span> debes usar técnicas de prompt eficientes. Puedes consultar <span class="highlight">nuestra guía de buenas prácticas</span><i>(Próximamente)</i>
+                Recuerda que para <span class="highlight">ahorrar energía</span> debes usar técnicas de prompt eficientes. Puedes consultar nuestra <a target="_blank" href="<%= WEB_PRINCIPAL_URL %>/environmental-impact#guia-buenas-practicas"><span class="highlight">guía de buenas prácticas</span></a>
             </div>
         </intro>
         <main class="main-content">
@@ -39,21 +39,24 @@
             </div>
             <div class="right-panel">
                 <div class="lock-container">
-                    <h2 id="lockTitle">🔒 Sala Cerrada</h2>
+                    <h2 id="lockTitle">🔒 Ordenador Bloqueado</h2>
                     <div class="timer-container">
                         <h2 class="timer" id="timer">00:00</h2>
                     </div>
                     <form class="lockbox" id="lockForm" autocomplete="off">
                         <label for="password">Introduce la contraseña:</label>
                         <input id="password" required autocomplete="off" placeholder="••••••••">
-                        <button type="submit">Desbloquear candado</button>
+                        <button type="submit">Desbloquear ordenador</button>
                         <div id="message"></div>
+                        <div style="display:none;" id="backMenu"><a onclick="backToMenu('<%= WEB_PRINCIPAL_URL %>', '<%= CONTEXT_PATH %>')">Volver al menú</a></div>
                     </form>
                 </div>
             </div>
         </main>
     </div>
-    
+    <div class="fixed-center">
+        <iframe id="babyShark" style="display:none;" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">

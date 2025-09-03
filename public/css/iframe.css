@@ -64,3 +64,8 @@
     border: none;
     color: var(--blanco);
 }
+
+.a-link-3oirdkalj {
+    color: var(--verde-claro) !important;
+    text-decoration: underline !important;
+}

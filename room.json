@@ -1,7 +1,7 @@
 {
     "escape_1": {
       "title": "Introducción",
-      "desc": "Conoce al creador del juego...",
+      "desc": "Conoce al creador del virus...",
       "botName": "Arthur",
       "iframe": "asst_c7ZFqjGDQFnQzZp5upzWWP8g",
       "botTitle": "Arthur 🕵️‍♂️",
@@ -15,7 +15,7 @@
     },
     "escape_2": {
       "title": "El restaurante de Li",
-      "desc": "Tu primer paso será el restaurante de Li",
+      "desc": "Tu segundo paso será el restaurante de Li",
       "botName": "Li",
       "iframe": "asst_fHdQ4i4QURIKXGI97DWKbUTu",
       "botTitle": "Li 🍜",
@@ -29,7 +29,7 @@
     },
     "escape_3": {
       "title": "El laboratorio",
-      "desc": "El laboratorio será tu segunda parada",
+      "desc": "El laboratorio será tu tercera parada",
       "botName": "Trebor",
       "iframe": "asst_z38myQihDoCwEN1Z6tRfWi7I",
       "botTitle": "Trebor 🔬",
