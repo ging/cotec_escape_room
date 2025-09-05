@@ -11,7 +11,13 @@
       "outputWordsPenalty": 0.1,
       "failurePenalty": 10,
       "timeLimit": 600,
-      "avaliable": ""
+      "avaliable": "",
+      "pistas": {
+        "1": "El primer dígito es el 1",
+        "2": "Fíjate en el orden de las letras en 'sert le se etneiugis'",
+        "3": "Las parejas se representan con el número 2",
+        "4": "Este número es el más redondo de todos"
+      }
     },
     "escape_2": {
       "title": "El restaurante de Li",
@@ -25,7 +31,12 @@
       "outputWordsPenalty": 0.1,
       "failurePenalty": 10,
       "timeLimit": 600,
-      "avaliable": "escape_1"
+      "avaliable": "escape_1",
+      "pistas": {
+        "1": "El arroz más famoso de la cocina china es el arroz N delicias. ¿Qué puede ser la N?",
+        "2-3": "Resuelve la operación, el resultado son dos dígitos. Ojo que en alguna foto hay más de una pieza de fruta...",
+        "4": "Busca un ábaco asiático en internet y fíjate en el número de bolas que tiene cada barra"
+      }
     },
     "escape_3": {
       "title": "El laboratorio",
@@ -39,7 +50,13 @@
       "outputWordsPenalty": 0.1,
       "failurePenalty": 10,
       "timeLimit": 600,
-      "avaliable": "escape_2"
+      "avaliable": "escape_2",
+      "pistas": {
+        "1": "Cuenta las nombres del Chatbot",
+        "2": "Busca en internet el número atómico del fluor",
+        "3-4": "Cada país tiene un prefijo telefónico. ¿Cuál es el de España?"
+      }
+      
     },
     "escape_4": {
       "title": "Viaje por el espacio",
@@ -53,6 +70,11 @@
       "outputWordsPenalty": 0.1,
       "failurePenalty": 10,
       "timeLimit": 600,
-      "avaliable": "escape_3"
+      "avaliable": "escape_3",
+      "pistas": {
+        "1-2": "¿Qué número de misión Apolo fue el primero en aterrizar en la Luna?",
+        "3": "¿Cuántos minutos tarda la luz del Sol en llegar a la tierra?",
+        "4-5": "¿Cuántos años tarda Saturno en dar una vuelta completa al Sol? La respuesta está aquí: https://youtube.com/shorts/FYCNxRn-fIM"
+      }
     }
 }

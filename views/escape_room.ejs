@@ -18,9 +18,21 @@
             </div>
             <div id="already-completed" class ="desc" style="color:var(--verde-claro);"></div>
             <div class="desc">
-                Recuerda que para <span class="highlight">ahorrar energía</span> debes usar técnicas de prompt eficientes. Puedes consultar nuestra <a target="_blank" href="<%= WEB_PRINCIPAL_URL %>/environmental-impact#guia-buenas-practicas"><span class="highlight">guía de buenas prácticas</span></a>
+                Recuerda que para <span class="highlight">ahorrar energía</span> debes usar técnicas de prompt eficientes. Puedes consultar nuestra <a target="_blank" href="<%= WEB_PRINCIPAL_URL %>/environmental-impact#guia-buenas-practicas"><span class="highlight">guía de buenas prácticas.</span></a> Una buena forma de comenzar tu conversación es pidiéndole al asistente que se presente y te explique en qué puede ayudarte, por ejemplo <span class="highlight">"Hola, ¿quién eres?"</span> Después pide pistas para obtener los dígitos de la contraseña. Cada <span class="highlight">3 minutos</span> puedes pedir una <span class="highlight">pista</span>.
             </div>
         </intro>
+            <!-- Pistas visuales -->
+        <div class="desc">
+            <span id="pista-timer-text"></span><span id="pista-timer-number"></span>
+        </div>
+        <div class="hints-balls-container">
+            <% if (typeof pistas !== 'undefined') { %>
+                <% Object.keys(pistas).forEach(function(key) { %>
+                        <button type="button" class="hint-ball" aria-label="Pista <%= key %>" data-pista="<%- pistas[key].replace(/'/g, '&apos;').replace(/\"/g, '&quot;') %>"><%= key %></button>
+                <% }); %>
+            <% } %>
+        </div>
+</head>
         <main class="main-content">
             <div class="left-panel">
                 <div class="chatbot-container">
@@ -70,17 +82,25 @@
         </div>
     </footer>
     
-    <script src="<%= CONTEXT_PATH %>/js/script.js" onload="initEscapeRoom({
-        room: '<%= room %>', 
-        totalEnergy: <%= totalEnergy %>, 
+    <!-- Modal de pista -->
+    <div id="modalPista">
+        <div class="modal-content">
+            <span id="modalPistaTexto"></span>
+            <button class="modal-close-btn" onclick="document.getElementById('modalPista').style.display='none'">Cerrar</button>
+        </div>
+    </div>
+    
+    <script src="<%= CONTEXT_PATH %>/js/script.js" onload='initEscapeRoom({
+        room: "<%= room %>",
+        totalEnergy: <%= totalEnergy %>,
         inputWordsPenalty: <%= inputWordsPenalty %>,
         outputWordsPenalty: <%= outputWordsPenalty %>,
         failurePenalty: <%= failurePenalty %>,
         timeLimit: <%= timeLimit %>,
         allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
-        contextPath: '<%= CONTEXT_PATH %>',
-        webPrincipalUrl: '<%= WEB_PRINCIPAL_URL %>',
+        contextPath: "<%= CONTEXT_PATH %>",
+        webPrincipalUrl: "<%= WEB_PRINCIPAL_URL %>",
         newCSS: `<%= newCSSIframe %>`
-    })"></script>
+    })'></script>
 </body>
 </html> 

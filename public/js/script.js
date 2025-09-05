@@ -2,6 +2,51 @@ function backToMenu(uri, contextPath) {
     window.location.href = uri + '/challenges' || contextPath + '/';
 }
 
+// Modal de pista
+function initHintModal(hintTimerInterval, resetHintTimer, updateHintBallsState) {
+    document.querySelectorAll('.hint-ball').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            // Verificar si la bola ya fue usada
+            if (btn.classList.contains('hint-ball-used')) {
+                var texto = btn.getAttribute('data-pista');
+                document.getElementById('modalPistaTexto').textContent = texto;
+                document.getElementById('modalPista').style.display = 'flex';
+                return;
+            }
+            
+            // No permitir pulsar si el temporizador de pistas está activo
+            if (hintTimerInterval.current !== null) {
+                return; // No hacer nada, simplemente no responder al click
+            }
+            
+            // Mostrar pista nueva y marcar como usada
+            var texto = btn.getAttribute('data-pista');
+            document.getElementById('modalPistaTexto').textContent = texto;
+            document.getElementById('modalPista').style.display = 'flex';
+            btn.classList.add('hint-ball-used');
+            
+            // Reiniciar temporizador de pistas
+            const anyUnused = Array.from(document.querySelectorAll('.hint-ball')).some(b => !b.classList.contains('hint-ball-used'));
+            if (anyUnused) {
+                resetHintTimer();
+            } else {
+                if (hintTimerInterval.current) {
+                    clearInterval(hintTimerInterval.current);
+                    hintTimerInterval.current = null;
+                }
+                const timerElement = document.getElementById('pista-timer-number');
+                const timerTextElement = document.getElementById('pista-timer-text');
+                timerElement.textContent = '';
+                timerTextElement.textContent = 'No quedan pistas';
+            }
+        });
+    });
+    // Cerrar modal al hacer click fuera
+    document.getElementById('modalPista').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
+}
+
 // Change the CSS of the iframe
 function updateCSSIframe(newCSS) {
     const iframeEscape = document.getElementById('iframeEscape');
@@ -39,6 +84,11 @@ function initEscapeRoom(config) {
     let assistant_id;
     let run_id;
     let thread_id;
+    
+    // Temporizador de pistas (3 minutos = hintDuration segundos)
+    const hintDuration = 180; // 3 minutos
+    let hintTimer = hintDuration;
+    let hintTimerInterval = { current: null };
 
     const batteryLevel = document.getElementById('batteryLevel');
     const energyValue = document.getElementById('energyValue');
@@ -140,6 +190,73 @@ function initEscapeRoom(config) {
         }
     }
     
+    // Función para iniciar el temporizador de pistas
+    function startHintTimer() {
+        hintTimerInterval.current = setInterval(() => {
+            hintTimer--;
+            updateHintTimerDisplay();
+            if (hintTimer <= 0) {
+                clearInterval(hintTimerInterval.current);
+                hintTimerInterval.current = null;
+                hintTimer = hintDuration; // Reiniciar a 3 minutos
+                // Habilitar bolas no usadas visualmente
+                updateHintBallsState();
+                updateHintTimerDisplay();
+            }
+        }, 1000);
+        
+        // Deshabilitar bolas no usadas visualmente después de asignar el interval
+        updateHintBallsState();
+        updateHintTimerDisplay();
+    }
+    
+    // Función para detener el temporizador de pistas
+    function stopHintTimer() {
+        if (hintTimerInterval.current) {
+            clearInterval(hintTimerInterval.current);
+            hintTimerInterval.current = null;
+        }
+    }
+    
+    // Función para reiniciar el temporizador de pistas
+    function resetHintTimer() {
+        stopHintTimer();
+        hintTimer = hintDuration; // 3 minutos
+        startHintTimer();
+    }
+    
+    // Función para actualizar la visualización del temporizador de pistas
+    function updateHintTimerDisplay() {
+        const timerElement = document.getElementById('pista-timer-number');
+        const timerTextElement = document.getElementById('pista-timer-text');
+        
+        if (timerElement && timerTextElement) {
+            if (hintTimerInterval.current !== null) {
+                timerElement.textContent = hintTimer + ' segundos';
+                timerTextElement.textContent = 'Siguiente pista en ';
+            } else {
+                timerElement.textContent = '';
+                timerTextElement.textContent = 'Nueva pista disponible ';
+            }
+        }
+    }
+    
+    // Función para actualizar el estado visual de las bolas de pista
+    function updateHintBallsState() {
+        document.querySelectorAll('.hint-ball').forEach(function(btn) {
+            if (!btn.classList.contains('hint-ball-used')) {
+                if (hintTimerInterval.current !== null) {
+                    btn.classList.add('hint-ball-disabled');
+                    btn.style.pointerEvents = 'none';
+                } else {
+                    btn.classList.remove('hint-ball-disabled');
+                    btn.style.pointerEvents = 'auto';
+                }
+            }
+        });
+        updateHintTimerDisplay();
+    }
+    
     // Función para cuando se acaba el tiempo o la energía
     async function gameOver() {
 
@@ -152,6 +269,14 @@ function initEscapeRoom(config) {
         //stopTimer(); -> TBD Descomentar
         isGameOver = true;
         
+        // Detener temporizador de pistas
+        stopHintTimer();
+        
+        // Ocultar temporizador de pistas
+        const timerTextElement = document.getElementById('pista-timer-text');
+        if (timerTextElement) {
+            timerTextElement.style.display = 'none';
+        }
 
         // Bloquear el ordenador
         lockContainer.classList.add('error');
@@ -327,6 +452,14 @@ function initEscapeRoom(config) {
             if (data.completed === true) {
                 // Detener el temporizador
                 stopTimer();
+                
+                // Detener y ocultar temporizador de pistas
+                stopHintTimer();
+                const timerTextElement = document.getElementById('pista-timer-text');
+                if (timerTextElement) {
+                    timerTextElement.style.display = 'none';
+                }
+                
                 // Cambiar el estado del ordenador a abierto
                 const lockTitle = document.getElementById('lockTitle');
                 lockTitle.textContent = "🔓 Ordenador Debloqueado";
@@ -360,6 +493,15 @@ function initEscapeRoom(config) {
             messageDiv.className = "error";
         }
     });
+    
+    // Iniciar el temporizador de pistas
+    startHintTimer();
+    
+    // Inicializar modal de pistas
+    initHintModal(hintTimerInterval, resetHintTimer, updateHintBallsState);
+    
+    // Inicializar display del temporizador de pistas
+    updateHintTimerDisplay();
     
     // Iniciar el temporizador cuando se carga la página
     startTimer();
