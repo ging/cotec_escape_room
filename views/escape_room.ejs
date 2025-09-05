@@ -27,7 +27,7 @@
         </div>
         <div class="hints-balls-container">
             <% if (typeof pistas !== 'undefined') { %>
-                <% Object.keys(pistas).forEach(function(key) { %>
+                <% Object.keys(pistas).sort().forEach(function(key) { %>
                         <button type="button" class="hint-ball" aria-label="Pista <%= key %>" data-pista="<%- pistas[key].replace(/'/g, '&apos;').replace(/\"/g, '&quot;') %>"><%= key %></button>
                 <% }); %>
             <% } %>
