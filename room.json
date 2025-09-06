@@ -13,7 +13,7 @@
       "timeLimit": 600,
       "avaliable": "",
       "pistas": {
-        "1": "El primer dígito es el 1",
+        "1": "El primer dígito es el 1. Para encontrar el primer carácter de la contraseña maestra necesitas un código de 4 dígitos para entrar en este ordenador.",
         "2": "Fíjate en el orden de las letras en 'sert le se etneiugis'",
         "3": "Las parejas se representan con el número 2",
         "4": "Este número es el más redondo de todos"
@@ -21,7 +21,7 @@
     },
     "escape_2": {
       "title": "El restaurante de Li",
-      "desc": "Tu segundo paso será el restaurante de Li",
+      "desc": "Tu último paso será el restaurante de Li.",
       "botName": "Li",
       "iframe": "asst_fHdQ4i4QURIKXGI97DWKbUTu",
       "botTitle": "Li 🍜",
@@ -34,13 +34,13 @@
       "avaliable": "escape_1",
       "pistas": {
         "1": "El arroz más famoso de la cocina china es el arroz N delicias. ¿Qué puede ser la N?",
-        "2-3": "Resuelve la operación, el resultado son dos dígitos. Ojo que en alguna foto hay más de una pieza de fruta...",
+        "2-3": "Resuelve la operación que encuentras aquí: https://drive.upm.es/s/y2nX52FXizRJXdy, el resultado son dos dígitos. Ojo que en alguna foto hay más de una pieza de fruta...",
         "4": "Busca un ábaco asiático en internet y fíjate en el número de bolas que tiene cada barra"
       }
     },
     "escape_3": {
       "title": "El laboratorio",
-      "desc": "El laboratorio será tu tercera parada",
+      "desc": "El laboratorio será tu segunda parada.",
       "botName": "Trebor",
       "iframe": "asst_z38myQihDoCwEN1Z6tRfWi7I",
       "botTitle": "Trebor 🔬",
@@ -60,7 +60,7 @@
     },
     "escape_4": {
       "title": "Viaje por el espacio",
-      "desc": "Tu última parada será el espacio",
+      "desc": "Tu tercera parada será el espacio.",
       "botName": "Gemma",
       "iframe": "asst_MysKOGiMFjN7Tf7ZOoa9x1Nx",
       "botTitle": "Gemma 👩🏼‍🚀",
