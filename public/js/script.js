@@ -415,8 +415,7 @@ function initEscapeRoom(config) {
                 break;
                 
             case 'error':
-                updateStatus('Error en el chatbot: ' + data.error, 'error');
-                console.error('Error del chatbot:', data);
+                console.error('Error del chatbot');
                 break;
                 
             default:
