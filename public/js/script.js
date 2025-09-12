@@ -84,6 +84,7 @@ function initEscapeRoom(config) {
     let assistant_id;
     let run_id;
     let thread_id;
+    let iframeLoaded = false;
     
     // Temporizador de pistas (3 minutos = hintDuration segundos)
     const hintDuration = 180; // 3 minutos
@@ -360,11 +361,24 @@ function initEscapeRoom(config) {
         
         energyValue.textContent = Math.floor(remaining_energy) + "%";
     }
+
+    async function reloadIframe() {
+        if (iframeLoaded) return; // Evitar recargas múltiples
+        setTimeout(() => {
+            if (iframeLoaded){
+                console.log("El iframe ya se cargó, no es necesario recargarlo.");
+                return;
+            }
+            const iframeEscape = document.getElementById('iframeEscape');
+            iframeEscape.src = iframeEscape.src; // Recargar el iframe
+            console.log("¡¡Recargando iframe del chatbot porque no cargó...!!");
+            reloadIframe();
+        }, 5000);
+    }
     
     
     // Función para manejar eventos del chatbot
     async function handleChatbotEvent(type, data) {
-        
         // Manejar diferentes tipos de eventos
         switch(type) {
             case 'iframe_loaded':
@@ -372,6 +386,7 @@ function initEscapeRoom(config) {
                 assistant_id = data.assistantId;
                 updateCSSIframe(config.newCSS);
                 document.getElementById('iframeEscape').style.display = 'block';
+                iframeLoaded = true;
 
                 break;
             case 'chat_created':
@@ -505,4 +520,9 @@ function initEscapeRoom(config) {
     
     // Iniciar el temporizador cuando se carga la página
     startTimer();
+
+    // Intentar recargar el iframe si no se carga
+    reloadIframe();
+
+
 }

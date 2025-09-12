@@ -8,7 +8,7 @@ const dev = process.env.NODE_ENV !== "production";
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sostenibilidadgenerativa';
 const CONTEXT_PATH = process.env.CONTEXT_PATH || '/sostenibilidadgenerativa';
 const ALLOW_CONTINUE_AFTER_GAME_OVER = process.env.ALLOW_CONTINUE_AFTER_GAME_OVER === 'true' || process.env.ALLOW_CONTINUE_AFTER_GAME_OVER === true || false;
-const IFRAME_URL = process.env.IFRAME_URL || 'http://localhost:3000/agentes/embed/';
+const IFRAME_URL = process.env.IFRAME_URL || 'http://localhost:3000/agentes';
 const WEB_PRINCIPAL_URL = process.env.WEB_PRINCIPAL_URL || ''
 const rooms = require('./room.json');
 const fs = require('fs').promises;
