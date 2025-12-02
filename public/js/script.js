@@ -59,6 +59,8 @@ function updateCSSIframe(newCSS) {
 }
 
 function initEscapeRoom(config) {
+    const iframeEscape = document.getElementById('iframeEscape');
+    iframeEscape.src = iframeEscape.getAttribute('src_old');
     const {
         room = "escape_1",
         totalEnergy = 100,
@@ -102,18 +104,6 @@ function initEscapeRoom(config) {
     // Obtener escapp_email de localStorage o pedirlo si no existe
 
     let escapp_email = localStorage.getItem('escapp_email');
-    if (!escapp_email) {
-        while (!escapp_email || !/^\S+@\S+\.\S+$/.test(escapp_email)) {
-            escapp_email = prompt('Por favor, introduce tu email para continuar:');
-            if (escapp_email === null) break;
-        }
-        if (escapp_email) localStorage.setItem('escapp_email', escapp_email);
-    }
-    if (!escapp_email) {
-        messageDiv.textContent = "Debes introducir un email válido para continuar.";
-        messageDiv.className = "error";
-        return;
-    }
 
     async function fetchAlreadyCompleted() {
         try {
@@ -369,8 +359,7 @@ function initEscapeRoom(config) {
                 console.log("El iframe ya se cargó, no es necesario recargarlo.");
                 return;
             }
-            const iframeEscape = document.getElementById('iframeEscape');
-            iframeEscape.src = iframeEscape.src; // Recargar el iframe
+            iframeEscape.src = iframeEscape.getAttribute('src_old'); // Recargar el iframe
             console.log("¡¡Recargando iframe del chatbot porque no cargó...!!");
             reloadIframe();
         }, 5000);

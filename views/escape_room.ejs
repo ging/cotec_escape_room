@@ -10,6 +10,27 @@
     <header>
         <img src="<%= CONTEXT_PATH %>/imgs/sg-logo.png" alt="Logo" style="height: 40px; cursor: pointer;" onclick="backToMenu('<%= WEB_PRINCIPAL_URL %>', '<%= CONTEXT_PATH %>')">
     </header>
+
+     <!-- Consent Overlay -->
+        <div id="consentOverlay">
+            <div class="consent-box">
+                <div style="margin-top:12px; text-align:left">
+                  <label for="consentEmail"><strong>Correo</strong></label>
+                  <input id="consentEmail" type="email" placeholder="tu@email.com" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--gris-medio);margin-top:6px">
+                  <div id="consentError" style="color:#ff5252; font-weight:bold; margin-top:6px; display:none">Debes aceptar los términos y la política de privacidad.</div>
+                  <div id="consentEmailError" style="color:#ff5252; font-weight:bold; margin-top:6px; display:none">Introduce un email válido.</div>
+                </div>
+                    <div style="margin-top:10px; display:flex; align-items:center; gap:8px">
+                        <input id="consentAccept" type="checkbox" />
+                        <label for="consentAccept" style="margin:0">
+                            <small>He leído y acepto los <a href="<%= CONTEXT_PATH %>/terminos.html" target="_blank" rel="noopener">Términos de Uso</a> y la <a href="<%= CONTEXT_PATH %>/privacy.html" target="_blank" rel="noopener">Política de Privacidad</a></small>
+                        </label>
+                    </div>
+                <div class="consent-actions">
+                    <button id="acceptConsentBtn" type="button">Continuar</button>
+                </div>
+            </div>
+        </div>
     <div class="container">
         <intro class="intro">
             <h1><%= title %></h1>
@@ -46,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <iframe id="iframeEscape" src="<%=IFRAME_URL%>/embed/<%= iframe %>?assistant_name=<%= botName %>&escapp_email=<%= escapp_email %>"></iframe>
+                    <iframe id="iframeEscape" src_old="<%=IFRAME_URL%>/embed/<%= iframe %>?assistant_name=<%= botName %>&escapp_email=<%= escapp_email %>"></iframe>
                 </div>
             </div>
             <div class="right-panel">
@@ -95,18 +116,62 @@
             <button class="modal-close-btn" onclick="document.getElementById('modalPista').style.display='none'">Cerrar</button>
         </div>
     </div>
+
+    <script>
+        function initialize() {
+                const overlay = document.getElementById('consentOverlay');
+                const accepted = localStorage.getItem('consented') === 'true';
+                function show() { overlay.style.display = 'flex'; }
+                function hide() { overlay.style.display = 'none'; }
+                const hasEmail = !!localStorage.getItem('escapp_email');
+                if (!accepted || !hasEmail) { show(); } 
+                else { hide(); 
+                        initEscapeRoom({
+                        room: "<%= room %>",
+                        totalEnergy: <%= totalEnergy %>,
+                        inputWordsPenalty: <%= inputWordsPenalty %>,
+                        outputWordsPenalty: <%= outputWordsPenalty %>,
+                        failurePenalty: <%= failurePenalty %>,
+                        timeLimit: <%= timeLimit %>,
+                        allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
+                        contextPath: "<%= CONTEXT_PATH %>",
+                        webPrincipalUrl: "<%= WEB_PRINCIPAL_URL %>",
+                        newCSS: `<%= newCSSIframe %>`
+                        }); 
+                    }
+                const btn = document.getElementById('acceptConsentBtn');
+                const acceptChk = document.getElementById('consentAccept');
+                const emailInput = document.getElementById('consentEmail');
+                const emailError = document.getElementById('consentEmailError');
+                const consentError = document.getElementById('consentError');
+                function validEmail(v){ return /^\S+@\S+\.\S+$/.test(v); }
+
+                btn.addEventListener('click', function() {
+                    const email = (emailInput && emailInput.value || '').trim();
+                    console.log(acceptChk.checked)
+                    emailError.style.display = 'none';
+                    consentError.style.display = 'none';
+                    if (!validEmail(email)) { emailError.style.display = 'block'; return; }
+                    if (!acceptChk.checked) { consentError.style.display = 'block'; return; }
+                    localStorage.setItem('consented', 'true');
+                    localStorage.setItem('escapp_email', email);
+                    hide();
+                    initEscapeRoom({
+                        room: "<%= room %>",
+                        totalEnergy: <%= totalEnergy %>,
+                        inputWordsPenalty: <%= inputWordsPenalty %>,
+                        outputWordsPenalty: <%= outputWordsPenalty %>,
+                        failurePenalty: <%= failurePenalty %>,
+                        timeLimit: <%= timeLimit %>,
+                        allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
+                        contextPath: "<%= CONTEXT_PATH %>",
+                        webPrincipalUrl: "<%= WEB_PRINCIPAL_URL %>",
+                        newCSS: `<%= newCSSIframe %>`
+                    });
+                });
+            };
+    </script>
     
-    <script src="<%= CONTEXT_PATH %>/js/script.js" onload='initEscapeRoom({
-        room: "<%= room %>",
-        totalEnergy: <%= totalEnergy %>,
-        inputWordsPenalty: <%= inputWordsPenalty %>,
-        outputWordsPenalty: <%= outputWordsPenalty %>,
-        failurePenalty: <%= failurePenalty %>,
-        timeLimit: <%= timeLimit %>,
-        allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
-        contextPath: "<%= CONTEXT_PATH %>",
-        webPrincipalUrl: "<%= WEB_PRINCIPAL_URL %>",
-        newCSS: `<%= newCSSIframe %>`
-    })'></script>
+    <script src="<%= CONTEXT_PATH %>/js/script.js" onload='initialize()'></script>
 </body>
 </html> 

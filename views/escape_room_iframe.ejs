@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sostenibilidad Generativa</title>
+    <link rel="stylesheet" href="<%= CONTEXT_PATH %>/css/styles.css">
+</head>
+<body>
+    <main class="main-content">
+        <div class="left-panel">
+            <div class="chatbot-container">
+                <div class="chatbot-intro">
+                    <h3><%= botTitle %></h3>
+                    <div class="energy-container">
+                        <div class="battery">
+                            <div class="battery-level" id="batteryLevel"></div>
+                            <span id="energyValue">100%</span>
+                            <span id="energyRays">⚡⚡⚡</span>
+                        </div>
+                    </div>
+                </div>
+                <iframe id="iframeEscape" src="<%=IFRAME_URL%>/embed/<%= iframe %>?assistant_name=<%= botName %>&escapp_email=<%= escapp_email %>"></iframe>
+            </div>
+        </div>
+    </main>
+    
+    <script src="<%= CONTEXT_PATH %>/js/script.js" onload='initEscapeRoom({
+        room: "<%= room %>",
+        totalEnergy: <%= totalEnergy %>,
+        inputWordsPenalty: <%= inputWordsPenalty %>,
+        outputWordsPenalty: <%= outputWordsPenalty %>,
+        failurePenalty: <%= failurePenalty %>,
+        timeLimit: <%= timeLimit %>,
+        allowContinueAfterGameOver: <%= allowContinueAfterGameOver %>,
+        contextPath: "<%= CONTEXT_PATH %>",
+        webPrincipalUrl: "<%= WEB_PRINCIPAL_URL %>",
+        newCSS: `<%= newCSSIframe %>`,
+        escapp: true,
+    })'></script>
+</body>
+</html> 
